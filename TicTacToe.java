@@ -1,58 +1,39 @@
-import java.util.Random;
-
 public class TicTacToe {
 
+    // 3x3 Board initialization
+    static char[][] board = {
+        {'-', '-', '-'},
+        {'-', '-', '-'},
+        {'-', '-', '-'}
+    };
+
     public static void main(String[] args) {
-        char[][] board = new char[3][3];
 
-        initializeBoard(board);
-        printBoard(board);
-
-        tossToDecide();
+        // Test cases
+        System.out.println("Move (1,1): " + isValidMove(1, 1)); // true
+        board[1][1] = 'X'; // occupy cell
+        System.out.println("Move (1,1) again: " + isValidMove(1, 1)); // false
+        System.out.println("Move (3,3): " + isValidMove(3, 3)); // false (out of bounds)
     }
 
-    // UC1 methods
-    public static void initializeBoard(char[][] board) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                board[i][j] = '-';
-            }
-        }
-    }
+    /**
+     * UC5: Validate move
+     * Checks:
+     * 1. Row and column are within bounds (0–2)
+     * 2. Cell is empty ('-')
+     */
+    static boolean isValidMove(int row, int col) {
 
-    public static void printBoard(char[][] board) {
-        System.out.println("Tic-Tac-Toe Board:");
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                System.out.print(board[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
-
-    // UC2: Toss logic
-    public static void tossToDecide() {
-        Random random = new Random();
-
-        int toss = random.nextInt(2); // 0 or 1
-
-        char userSymbol;
-        char computerSymbol;
-        String currentPlayer;
-
-        if (toss == 0) {
-            userSymbol = 'X';
-            computerSymbol = 'O';
-            currentPlayer = "User";
-        } else {
-            userSymbol = 'O';
-            computerSymbol = 'X';
-            currentPlayer = "Computer";
+        // Boundary check
+        if (row < 0 || row > 2 || col < 0 || col > 2) {
+            return false;
         }
 
-        System.out.println("\nToss Result:");
-        System.out.println("User Symbol: " + userSymbol);
-        System.out.println("Computer Symbol: " + computerSymbol);
-        System.out.println("First Turn: " + currentPlayer);
+        // Check if cell is empty
+        if (board[row][col] != '-') {
+            return false;
+        }
+
+        return true;
     }
 }
